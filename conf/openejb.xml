@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!DOCTYPE openejb>
+<openejb>
+
+    <!-- Remarque : Vous pous également utiliser
+        L'URL ci-dessous pour stocker votre BD dans un fichier et donc
+        observer les tables et les lignes créées :
+            JdbcUrl jdbc:hsqldb:file:data/maBase
+                    JdbcUrl jdbc:hsqldb:mem:inMemoryDatabase
+            
+    -->
+
+    <!-- pour les tests JPA -->
+    <Resource id="myTestDatabase" type="DataSource">
+        JdbcDriver org.hsqldb.jdbcDriver
+        JdbcUrl jdbc:hsqldb:file:data/maBase
+
+        UserName sa
+        Password
+        JtaManaged true
+    </Resource>
+
+</openejb>
