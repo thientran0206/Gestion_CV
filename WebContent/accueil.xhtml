@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<ui:composition template="/template/mylayout.xhtml">
+		<ui:define name="content">
+			<p:layoutUnit id="content" position="center">
+				<p:tabView>
+					<p:tab title="La liste des Personnes">
+						<h:form>
+
+							<p:dataTable var="p" value="#{person.persons}" rows="10"
+								paginator="true"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+
+								<p:column headerText="Id">
+									<h:commandLink action="#{person.show(p.id)}"
+										value="#{p.name} #{p.firstName}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:form>
+					</p:tab>
+				</p:tabView>
+			</p:layoutUnit>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

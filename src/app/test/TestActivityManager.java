@@ -56,9 +56,9 @@ public class TestActivityManager {
 		Activity activity = new Activity();
 		activity.setYear(new Date());
 		activity.setNature(Nature.EXPERIENCES_PROFESSIONNELLES);
-		activity.setTitle("Développeur application Hybride");
-		activity.setDescription("Analyse des besoins");
-		activity.setWebAddress("https://github.com/aminenasseh/Gestion-Cvs");
+		activity.setTitle("Développeur web");
+		activity.setDescription("Angular");
+		activity.setWebAddress("https://github.com/thientran0206/Gestion_CV.git");
 		Person person = new Person();
 		Person findPerson = new Person();
 		person.setId(1);
@@ -69,8 +69,8 @@ public class TestActivityManager {
 }
 	@Test
 	public void testFindOneActivity() {
-		Activity findActivity = activityManager.findOneActivity("Développeur application Hybride");
-		assertEquals("Développeur application Hybride", findActivity.getTitle());
+		Activity findActivity = activityManager.findOneActivity("Développeur web");
+		assertEquals("Développeur web", findActivity.getTitle());
 }
 	@Test
 	public void testFindActivity() {
@@ -79,7 +79,7 @@ public class TestActivityManager {
 }
 	@Test
 	 public void testdeleteOneActivity() {
-	 Activity activity = activityManager.findOneActivity("Développeur application Hybride");
+	 Activity activity = activityManager.findOneActivity("Développeur web");
 	 String titleActivity = activity.getTitle();
 	 activityManager.deleteOneActivity(titleActivity);
 }

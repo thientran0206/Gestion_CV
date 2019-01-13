@@ -64,10 +64,5 @@ public class ActivityManager {
 			em.remove(activity);
 		}
 }
-	public Person getAuthPerson() {
-		return authPerson;
-	}
-	public void setAuthPerson(Person authPerson) {
-		this.authPerson = authPerson;
-	}
+	
 }

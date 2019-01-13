@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/mylayout.xhtml">
+    <ui:define name="content">
+        <f:view>
+            <c:set var="p" value="#{person.person}" />
+            <div class="jumbotron">
+                <h1>Nom: #{p.name}</h1>
+                <h1>Prenom: #{p.firstname}</h1>
+                <p>Id: #{p.id}</p>
+                <p>Email: #{p.email}</p>
+                <p>SiteWeb: #{p.webSite}</p>
+                <p>Nee: #{p.birthDay}</p>
+                <p>
+                    <h:link outcome="accueil" styleClass="btn btn-info">
+                        <span>List of Person</span>
+                    </h:link>
+                </p>
+            </div>
+        </f:view>
+    </ui:define>
+</ui:composition>
+
+</html>
