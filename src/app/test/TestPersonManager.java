@@ -17,17 +17,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import app.dao.ActivityManager;
 import app.dao.PersonManager;
 import app.entities.Person;
 
 public class TestPersonManager {
 
 	static EJBContainer container;
-	@EJB
-    PersonManager pm;
-	static PersonManager dao;
+	static PersonManager personManager;
 
-	
+	@BeforeClass
+	public static void beforeAll() throws NamingException {
+		final String name = "java:global/liste_CV/ActivityManager";
+		final String name1 = "java:global/liste_CV/PersonManager";
+		container = EJBContainer.createEJBContainer();
+		//activityManager = (ActivityManager) container.getContext().lookup(name);
+		personManager = (PersonManager) container.getContext().lookup(name1);
+	}
 	@Before
     public void setUp() throws Exception {
         EJBContainer.createEJBContainer().getContext().bind("inject", this);
@@ -39,22 +45,23 @@ public class TestPersonManager {
     }
 	
 
-	@Test
+	/*@Test
 	public void testFindById() {
 		Person person = new Person("TRANT", "TrungTThien", "sds@ddddd", "ww.wssww", new Date(), "ttyt");
+		person.setId(1);
 		pm.addPerson(person);
-		System.out.println(pm.findPerson(person.getId()));
-	}
+		//assertEquals(1, pm.findPerson(person.getId()).getName());
+		System.out.println("Id de la personne:"+pm.findPerson(person.getId()));
+	}*/
 	@Test
 	public void testFindAllAndRemove() {
 		Person person1 = new Person("Amin","Daher","ad@ddd","www.sss",new Date(),"aaa");
 		Person person2 = new Person("TRAN", "TrungThien", "sds@ddd", "ww.www", new Date(), "ttt");
-		pm.addPerson(person1);
-		pm.addPerson(person2);
-		System.out.println(pm.findAllPersons());
+		personManager.addPerson(person1);
+		personManager.addPerson(person2);
+		System.out.println(personManager.findAllPersons());
 		
-		pm.removePerson(person1);
-		System.out.println(pm.findAllPersons());
+		personManager.removePerson(person1);
+		System.out.println(personManager.findAllPersons());
 	}
-	
 }

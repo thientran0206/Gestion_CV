@@ -37,6 +37,7 @@ public class PersonManager {
 	}
 
 	public Person findPerson(long id) {
+		System.err.println("findPerson witdh id=" + id);
 		return em.find(Person.class, id);
 	}
 
