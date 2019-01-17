@@ -14,27 +14,48 @@
 	<h:outputStylesheet library="css" name="style.css" />
 	<ui:composition template="/template/mylayout.xhtml">
 		<ui:define name="content">
-			<p:layoutUnit id="content" position="center">
-				<p:tabView>
-					<p:tab title="La liste des Personnes">
-						<h:form>
+			<f:view>
 
-							<p:dataTable var="p" value="#{person.persons}" rows="10"
-								paginator="true"
-								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15">
+            <h1>List of person</h1>
+            <h:form>
+               <p:dataTable value="#{personne.personnes}" var="o"
+				    styleClass="table table-hover" headerClass="danger"
+				    footerClass="danger" rowClasses="success,warning">
+				
+				    <p:column>
+				        <f:facet name="header">Number</f:facet>
+				        <h:outputText value="#{o.id}" />
+				    </p:column>
+				    <p:column>
+				        <f:facet name="header">Nom</f:facet>
+				        <h:outputText value="#{o.name}" />
+				    </p:column>
+				    <p:column>
+				        <f:facet name="header">Prenom</f:facet>
+				        <h:outputText value="#{o.firstName}" />
+				    </p:column>
+				    <p:column>
+				        <f:facet name="header">Email</f:facet>
+				        <h:outputText value="#{o.email}" />
+				    </p:column>
+				    <p:column>
+				        <f:facet name="header">Web</f:facet>
+				        <h:outputText value="#{o.webSite}" />
+				    </p:column>
+				    <p:column>
+				        <f:facet name="header">Regarder</f:facet>
+				        <h:commandLink value="Show" styleClass="btn btn-primary btn-xs"
+				            action="#{personne.show(o.id)}" />
+				    </p:column>
+				</p:dataTable>
+				
+                <p>
+                    <h:commandButton styleClass="btn btn-success"
+                        action="#{personne.newPerson()}" value="New Person" />
+                </p>
+            </h:form>
 
-								<p:column headerText="Id">
-									<h:commandLink action="#{person.show(p.id)}"
-										value="#{p.name} #{p.firstName}" />
-								</p:column>
-
-							</p:dataTable>
-
-						</h:form>
-					</p:tab>
-				</p:tabView>
-			</p:layoutUnit>
+        </f:view>
 		</ui:define>
 	</ui:composition>
 </h:body>

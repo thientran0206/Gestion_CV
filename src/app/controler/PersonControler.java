@@ -16,7 +16,9 @@ import app.entities.Activity;
 import app.entities.Nature;
 import app.entities.Person;
 
-@ManagedBean(name = "person")
+
+
+@ManagedBean(name = "personne")
 @SessionScoped
 public class PersonControler {
 
@@ -25,7 +27,7 @@ public class PersonControler {
 	@EJB
     ActivityManager am;
 
-    Person person = new Person();
+    Person thePerson = new Person();
 
     @PostConstruct
     public void init() {
@@ -48,24 +50,24 @@ public class PersonControler {
         return pm.findAllPersons();
     }
     public Person getThePerson() {
-        return person;
+        return thePerson;
     }
     public String show(Long n) {
-        person = pm.findPerson(n);
+        thePerson = pm.findPerson(n);
         return "showPerson";
     }
     public String save() {
-        pm.addPerson(person);
+        pm.addPerson(thePerson);
         return "showPerson";
     }
     public String newPerson() {
-        person = new Person();
+        thePerson = new Person();
         return "editPerson?faces-redirect=true";
     }
     
     public List<Activity> getActivitiesPerson() {
-		if (person != null) {
-			return pm.findActivitiesPerson(person);
+		if (thePerson != null) {
+			return pm.findActivitiesPerson(thePerson);
 		}
 		return null;
 }

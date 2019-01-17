@@ -28,7 +28,7 @@ public class TestPersonManager {
 
 	@BeforeClass
 	public static void beforeAll() throws NamingException {
-		final String name = "java:global/liste_CV/ActivityManager";
+		//final String name = "java:global/liste_CV/ActivityManager";
 		final String name1 = "java:global/liste_CV/PersonManager";
 		container = EJBContainer.createEJBContainer();
 		//activityManager = (ActivityManager) container.getContext().lookup(name);
@@ -36,23 +36,26 @@ public class TestPersonManager {
 	}
 	@Before
     public void setUp() throws Exception {
-        EJBContainer.createEJBContainer().getContext().bind("inject", this);
+       // EJBContainer.createEJBContainer().getContext().bind("inject", this);
     }
 
     @After
     public void tearDown() throws Exception {
-        EJBContainer.createEJBContainer().close();
+       // EJBContainer.createEJBContainer().close();
     }
-	
+    @AfterClass
+	public static void afterAll() {
+    	EJBContainer.createEJBContainer().close();
+	}
 
-	/*@Test
+	@Test
 	public void testFindById() {
 		Person person = new Person("TRANT", "TrungTThien", "sds@ddddd", "ww.wssww", new Date(), "ttyt");
-		person.setId(1);
-		pm.addPerson(person);
-		//assertEquals(1, pm.findPerson(person.getId()).getName());
-		System.out.println("Id de la personne:"+pm.findPerson(person.getId()));
-	}*/
+		//person.setId(1);
+		personManager.addPerson(person);
+		assertEquals(1, personManager.findPerson(person.getId()).getId());
+		System.out.println("Id de la personne:"+personManager.findPerson(person.getId()));
+	}
 	@Test
 	public void testFindAllAndRemove() {
 		Person person1 = new Person("Amin","Daher","ad@ddd","www.sss",new Date(),"aaa");

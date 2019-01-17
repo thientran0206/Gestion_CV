@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+
+			<h1>Person form</h1>
+			<h:form id="test">
+				<c:set var="p" value="#{personne.thePerson}" />
+
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<h:inputText id="name" value="#{p.name}" styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+				<div class="form-group">
+					<label for="name">First name:</label>
+					<h:inputText id="firstname" value="#{p.firstName}"
+						styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+				<div class="form-group">
+					<label for="name">Email:</label>
+					<h:inputText id="email" value="#{p.email}"
+						styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+				<div class="form-group">
+					<label for="name">Web Site:</label>
+					<h:inputText id="web" value="#{p.webSite}"
+						styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+
+				<div class="form-group">
+					<p:calendar id="birthday" value="#{p.birthDay}" locale="fr"
+						navigator="true" pattern="dd-MM-yyyy" />
+
+					<h:message styleClass="label label-danger" for="hours" />
+				</div>
+
+				<div class="form-group">
+					<label for="name">Password:</label>
+					<h:inputText id="pwd" value="#{p.pwd}" styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+
+
+				<div class="form-group">
+					<h:commandButton action="#{personne.save()}"
+						styleClass="btn btn-primary" value="Save" />
+					<span> </span>
+					<h:link styleClass="btn btn-info" outcome="accueil" value="Quit" />
+				</div>
+			</h:form>
+
+		</f:view>
+
+	</ui:define>
+</ui:composition>
+
+</html>
