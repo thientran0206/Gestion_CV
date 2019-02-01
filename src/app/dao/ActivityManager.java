@@ -24,13 +24,14 @@ public class ActivityManager {
 
 	@PersistenceContext(unitName = "myTestDatabaseUnit")
 	private EntityManager em;
-	
+
 	private Person authPerson = new Person();
-	
+
 	public List<Activity> findActivities() {
 		TypedQuery<Activity> q = em.createQuery("FROM Activity", Activity.class);
 		return q.getResultList();
-}
+	}
+
 	public Activity findOneActivity(String title) {
 		Query query = null;
 		try {
@@ -42,12 +43,14 @@ public class ActivityManager {
 			return (Activity) query.getSingleResult();
 		}
 		return null;
-}
+	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void saveActivity(Activity activity) {
 		em.persist(activity);
 		System.err.println("addPerson witdh id=" + activity.getIdActivity());
-}
+	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateActivity(Person person) {
 		if (person != null) {
@@ -57,12 +60,51 @@ public class ActivityManager {
 		} else {
 			System.out.println("Erreur lors de la modification");
 		}
-}
+	}
+
 	public void deleteOneActivity(String title) {
 		Activity activity = findOneActivity(title);
 		if (activity != null) {
 			em.remove(activity);
 		}
+	}
+
+	public Object login(String email, String pwd) {
+		Query query = null;
+		try {
+			query = em.createQuery(
+					"SELECT p FROM Person p WHERE p.email='" + email + "' AND p.pwd='" + pwd + "'");
+		} catch (NoResultException e) {
+			return null;
+		}
+		if (query != null) {
+			try {
+				authPerson = (Person) query.getSingleResult();
+			} catch (Exception e) {
+				return null;
+			}
+			return authPerson;
+		}
+		return null;
+
+	}
+	public Person logout() {
+		authPerson.setId(0);
+		authPerson.setName(null);
+		authPerson.setFirstName(null);
+		authPerson.setEmail(null);
+		authPerson.setBirthDay(null);
+		authPerson.setPwd(null);
+		authPerson.setWebSite(null);
+		return authPerson;
 }
-	
+
+	public Person getAuthPerson() {
+		return authPerson;
+	}
+
+	public void setAuthPerson(Person authPerson) {
+		this.authPerson = authPerson;
+	}
+
 }

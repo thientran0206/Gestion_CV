@@ -30,9 +30,11 @@ public class PersonManager {
 	}
 
 	public Person addPerson(Person p) {
-
-		em.persist(p);
-		System.err.println("addPerson witdh id=" + p.getId());
+		if (em.find(Person.class, p.getId()) == null) {
+			em.persist(p);
+			System.err.println("addPerson witdh id=" + p.getId());
+		} else
+			em.merge(p);
 		return p;
 	}
 
@@ -73,8 +75,8 @@ public class PersonManager {
 	public List<Activity> findActivityByTitle(String title) {
 		Query query = null;
 		try {
-			query = em.createQuery("SELECT p FROM Activity a, Person p WHERE a.title LIKE'%" + title
-					+ "%' AND p.id = a.owner.id");
+			query = em.createQuery(
+					"SELECT p FROM Activity a, Person p WHERE a.title LIKE'%" + title + "%' AND p.id = a.owner.id");
 		} catch (NoResultException e) {
 			return null;
 		}

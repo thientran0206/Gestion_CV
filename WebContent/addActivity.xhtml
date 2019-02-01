@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+
+			<h1>Activity form</h1>
+			<h:form id="test">
+				<c:set var="a" value="#{personne.activity}" />
+				<div class="form-group">
+					<label for="name">Titre:</label>
+					<h:inputText id="title" value="#{a.title}"
+						styleClass="form-control" required="true"
+						requiredMessage="Le titre est obligatoire">
+						<f:validateLength minimum="3" maximum="20" />
+					</h:inputText>
+					<h:message styleClass="label label-danger" for="titre" />
+				</div>
+				<div class="form-group">
+					<label for="name">Description:</label>
+					<h:inputText id="description" value="#{a.description}"
+						styleClass="form-control" />
+					<h:message styleClass="label label-danger" for="description" />
+				</div>
+				<div class="form-group col-md-4">
+					<label for="nature">Nature:</label> 
+					<select id="inputState" class="form-control" required="true" >
+						<option value="FORMATIONS">Formations</option>
+						<option value="PROJET">Projet</option>
+						<option value="EXPERIENCES_PROFESSIONNELLES">Experience Professionelles</option>
+						<option value="AUTRES">Autres</option>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label for="name">Adresse Web:</label>
+					<h:inputText id="web" value="#{a.webAddress}"
+						styleClass="form-control" validatorMessage="Site web n'est pas valide">
+						<f:validateRegex
+							pattern="^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$"/>
+						</h:inputText>
+					<h:message styleClass="label label-danger" for="web" />
+				</div>
+				<div class="form-group">
+					<label for="date">Year:</label>
+					<p:calendar id="year" value="#{a.year}" locale="fr" required="true"
+						navigator="true" pattern="yyyy" />
+
+					<h:message styleClass="label label-danger" for="year" />
+				</div>
+				<div class="form-group">
+					<h:commandButton action="#{personne.ajouter()}"
+						styleClass="btn btn-primary" value="Save" />
+					<span> </span>
+					<h:link styleClass="btn btn-info" outcome="showPerson" value="Quit" />
+				</div>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

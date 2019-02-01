@@ -13,15 +13,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+
 import javax.persistence.OneToMany;
 import javax.persistence.PostUpdate;
 import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+
 
 @Entity(name = "Person")
 public class Person implements Serializable {
@@ -127,7 +126,7 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return "Person(id=" + getId() + "," + firstName + "," + name + "," + email + "," + webSite + "," + birthDay
-				+ "," + "," + pwd + ")";
+				+ ","  + pwd + ")";
 	}
 
 	public long getId() {

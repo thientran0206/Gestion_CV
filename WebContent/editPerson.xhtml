@@ -16,39 +16,51 @@
 
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<h:inputText id="name" value="#{p.name}" styleClass="form-control" />
+					<h:inputText id="name" value="#{p.name}" styleClass="form-control"
+						required="true" requiredMessage="Le nom est obligatoire">
+						<f:validateLength minimum="3" maximum="20" />
+					</h:inputText>
 					<h:message styleClass="label label-danger" for="name" />
 				</div>
 				<div class="form-group">
 					<label for="name">First name:</label>
 					<h:inputText id="firstname" value="#{p.firstName}"
 						styleClass="form-control" />
-					<h:message styleClass="label label-danger" for="name" />
+					<h:message styleClass="label label-danger" for="firstName" />
 				</div>
 				<div class="form-group">
 					<label for="name">Email:</label>
 					<h:inputText id="email" value="#{p.email}"
-						styleClass="form-control" />
-					<h:message styleClass="label label-danger" for="name" />
+						styleClass="form-control" validatorMessage="Email n'est pas valide">
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</h:inputText>
+					<h:message styleClass="label label-danger" for="email" />
 				</div>
 				<div class="form-group">
 					<label for="name">Web Site:</label>
 					<h:inputText id="web" value="#{p.webSite}"
-						styleClass="form-control" />
-					<h:message styleClass="label label-danger" for="name" />
+						styleClass="form-control" validatorMessage="Site web n'est pas valide">
+						<f:validateRegex
+							pattern="^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$"/>
+						</h:inputText>
+					<h:message styleClass="label label-danger" for="web" />
 				</div>
 
 				<div class="form-group">
-					<p:calendar id="birthday" value="#{p.birthDay}" locale="fr"
+					<label for="name">Birthday(dd-mm-yyyy):</label>
+					<p:calendar id="birthday" value="#{p.birthDay}" locale="fr" required="true"
 						navigator="true" pattern="dd-MM-yyyy" />
 
-					<h:message styleClass="label label-danger" for="hours" />
+					<h:message styleClass="label label-danger" for="birthday" />
 				</div>
 
 				<div class="form-group">
 					<label for="name">Password:</label>
-					<h:inputText id="pwd" value="#{p.pwd}" styleClass="form-control" />
-					<h:message styleClass="label label-danger" for="name" />
+					<h:inputSecret id="pwd" value="#{p.pwd}" styleClass="form-control" validatorMessage="Mot de passe n'est pas valide">
+						<f:validateLength minimum="3" maximum="20" />
+					</h:inputSecret>
+					<h:message styleClass="label label-danger" for="pwd" />
 				</div>
 
 

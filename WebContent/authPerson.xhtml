@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+		<h1>Identification</h1>
+
+		<h:form id="loginForm">
+
+			<p:messages id="messages" />
+
+			<p:panelGrid columns="2">
+
+				<p:outputLabel for="email" value="Email:" />
+
+				<p:inputText id="email" value="#{personne.authPerson.email}" />
+
+				<p:outputLabel for="pwd" value="Mot de passe:" />
+
+				<p:password id="pwd" value="#{personne.authPerson.pwd}" />
+
+				<p:commandButton value="S'authentifier" icon="ui-icon-star"
+					action="#{personne.login()}" ajax="false">
+
+				</p:commandButton>
+
+			</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

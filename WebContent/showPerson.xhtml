@@ -20,32 +20,52 @@
 				<p>Email: #{p.email}</p>
 				<p>SiteWeb: #{p.webSite}</p>
 				<p>Nee: #{p.birthDay}</p>
-				<p>
-					<h:link outcome="accueil" styleClass="btn btn-info">
-						<span>List of Person</span>
-					</h:link>
-				</p>
-
+				<p></p>
+				<c:set var="auth" value="#{personne.authPerson}" />
+				<c:choose>
+					<c:when test="${auth.id eq 00}"></c:when>
+					<c:otherwise>
+						<p>
+							<h:link outcome="editPerson" styleClass="btn btn-info">
+								<span>Modifier info</span>
+							</h:link>
+						</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			<h1>List of Activity</h1>
+			<div>
+				<h1>List of Activity</h1>
+				<c:set var="auth" value="#{personne.authPerson}" />
+				<c:choose>
+					<c:when test="${auth.id eq 00}"></c:when>
+					<c:otherwise>
+						<p>
+							<h:link styleClass="btn btn-info" outcome="addActivity" value="Ajouter" />
+						</p>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
 			<table class="table">
-			 <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Nature</th>
-                        <th>Description</th>
-                    </tr>
-			<ui:repeat var="a" varStatus="s" value="#{p.activities}">
 				<tr>
-					
-					<td>#{a.idActivity}</td>
-					<td>#{a.title}</td>
-					<td>#{a.nature}</td>
-					<td>#{a.description}</td>
-					
+					<!--                         <th>Id</th> -->
+					<th>Year</th>
+					<th>Nature</th>
+					<th>Title</th>
+					<th>Description</th>
 				</tr>
-			</ui:repeat>
-</table>
+				<ui:repeat var="a" varStatus="s" value="#{p.activities}">
+					<tr>
+
+						<!-- 					<td>#{a.idActivity}</td> -->
+						<td>#{a.year}</td>
+						<td>#{a.nature}</td>
+						<td>#{a.title}</td>
+						<td>#{a.description}</td>
+
+					</tr>
+				</ui:repeat>
+			</table>
 		</f:view>
 
 	</ui:define>
