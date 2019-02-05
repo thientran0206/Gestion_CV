@@ -2,6 +2,7 @@ package app.controler;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -9,6 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import com.github.javafaker.Faker;
 
 import app.dao.ActivityManager;
 import app.dao.PersonManager;
@@ -41,8 +44,17 @@ public class PersonControler {
 	public void init() {
 		System.out.println("Create " + this);
 		if (pm.findAllPersons().size() == 0) {
+			Faker faker = new Faker(new Locale("fr"));
 			Person p1 = new Person("TRAN", "TrungThien", "thientran@gmail.com", "www.thientran.com", new Date(), "123");
 			pm.addPerson(p1);
+			for (int i = 0; i < 100; i++) {
+				String nom = faker.name().firstName();
+				String prenom = faker.name().lastName();
+				String email = faker.internet().safeEmailAddress(nom + prenom);
+				Person p2 = new Person(prenom, nom, email, faker.internet().url(), faker.date().birthday(18, 65),
+						"123");
+				pm.addPerson(p2);
+			}
 			Activity activity = new Activity();
 			activity.setYear(new Date());
 			activity.setNature(Nature.PROJET);
@@ -86,7 +98,6 @@ public class PersonControler {
 		}
 		return null;
 	}
-	
 
 	/* *************************Login******************************************** */
 	public String login() {
@@ -99,15 +110,18 @@ public class PersonControler {
 
 		return null;
 	}
+
 	public String logOut() {
 		authPerson = am.logout();
 		return "accueil";
 	}
-	
-	/* *******************************Activities************************************** */
-	
-	
-	private Activity activity=new Activity();
+
+	/*
+	 * *******************************Activities************************************
+	 * **
+	 */
+
+	private Activity activity = new Activity();
 
 	public Activity getActivity() {
 		return activity;
@@ -118,14 +132,12 @@ public class PersonControler {
 	}
 
 	public String ajouter() {
-		
 		activity.setOwner(pm.findPerson(authPerson.getId()));
 		am.saveActivity(activity);
 		System.out.println(activity.getOwner());
 		System.out.println(authPerson.getActivities());
-		activity=new Activity();
+		activity = new Activity();
 		return "showPerson";
 	}
-	
-	
+
 }
