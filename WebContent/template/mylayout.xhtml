@@ -49,8 +49,9 @@
 									</h:link></li>
 							</c:when>
 							<c:otherwise>
-								<li><h:commandButton action="#{personne.logOut()}"
-										value="Deconnection" /></li>
+							<h:form>
+								<li><h:commandButton value="Se déconnecter" action="#{personne.logOut()}" ajax="false" /></li>
+								</h:form>
 							</c:otherwise>
 						</c:choose>
 					</ul>

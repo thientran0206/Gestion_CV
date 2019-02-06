@@ -2,6 +2,7 @@ package app.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
@@ -84,5 +85,12 @@ public class PersonManager {
 			return query.getResultList();
 		}
 		return null;
+	}
+	public List<Person> search(String name) {
+		TypedQuery<Person> q;
+			 q = em.createQuery("SELECT p1 FROM Person p1 WHERE p1.name = :nom ", Person.class);
+			 q.setParameter("nom", name);
+			return q.getResultList();
+		
 	}
 }

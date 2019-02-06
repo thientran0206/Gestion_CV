@@ -1,8 +1,10 @@
 package app.controler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -10,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.github.javafaker.Faker;
 
@@ -103,7 +106,8 @@ public class PersonControler {
 	public String login() {
 		if (am.login(authPerson.getEmail(), authPerson.getPwd()) != null) {
 			authPerson = am.getAuthPerson();
-			return "accueil?faces-redirect=true";
+			thePerson = pm.findPerson(authPerson.getId());
+			return "showPerson?faces-redirect=true";
 		}
 		FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Identifiants incorrects", "");
 		FacesContext.getCurrentInstance().addMessage(null, fm);
@@ -112,7 +116,9 @@ public class PersonControler {
 	}
 
 	public String logOut() {
-		authPerson = am.logout();
+		System.out.println(" <=============== Déconnexion ================>");
+		authPerson = new Person();
+		//FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "accueil";
 	}
 
@@ -137,7 +143,24 @@ public class PersonControler {
 		System.out.println(activity.getOwner());
 		System.out.println(authPerson.getActivities());
 		activity = new Activity();
+		thePerson = pm.findPerson(authPerson.getId());//pour mise a jour nouvelle activite
 		return "showPerson";
 	}
+	
+	private List<Person> resultSearch = new ArrayList<Person>();
+	
+	public List<Person> getResultSearch() {
+		return resultSearch;
+	}
+
+	public void setResultSearch(List<Person> resultSearch) {
+		this.resultSearch = resultSearch;
+	}
+
+	public String showResultSearch() {
+		setResultSearch(pm.search(thePerson.getName()));
+		return "search?faces-redirect=true";
+	}
+	
 
 }

@@ -16,46 +16,54 @@
 		<ui:define name="content">
 			<f:view>
 
-            <h1>List of person</h1>
-            <h:form>
-               <p:dataTable value="#{personne.personnes}" var="o"
-				    styleClass="table table-hover" headerClass="danger"
-				    footerClass="danger" rowClasses="success,warning">
-				
-				    <p:column>
-				        <f:facet name="header">Number</f:facet>
-				        <h:outputText value="#{o.id}" />
-				    </p:column>
-				    <p:column>
-				        <f:facet name="header">Nom</f:facet>
-				        <h:outputText value="#{o.name}" />
-				    </p:column>
-				    <p:column>
-				        <f:facet name="header">Prenom</f:facet>
-				        <h:outputText value="#{o.firstName}" />
-				    </p:column>
-				    <p:column>
-				        <f:facet name="header">Email</f:facet>
-				        <h:outputText value="#{o.email}" />
-				    </p:column>
-				    <p:column>
-				        <f:facet name="header">Web</f:facet>
-				        <h:outputText value="#{o.webSite}" />
-				    </p:column>
-				    <p:column>
-				        <f:facet name="header">Regarder</f:facet>
-				        <h:commandLink value="Show" styleClass="btn btn-primary btn-xs"
-				            action="#{personne.show(o.id)}" />
-				    </p:column>
-				</p:dataTable>
-				
-                <p>
-                    <h:commandButton styleClass="btn btn-success"
-                        action="#{personne.newPerson()}" value="New Person" />
-                </p>
-            </h:form>
+				<h1>List of person</h1>
 
-        </f:view>
+				<h:form>
+					<td><p:inputText id="search"
+							value="#{personne.thePerson.name}" /></td>
+
+					<p:commandButton value="Recherche"
+						action="#{personne.showResultSearch()}" ajax="false">
+
+					</p:commandButton>
+					<p:dataTable value="#{personne.personnes}" var="o"
+						styleClass="table table-hover" headerClass="danger"
+						footerClass="danger" rowClasses="success,warning">
+
+						<p:column>
+							<f:facet name="header">Number</f:facet>
+							<h:outputText value="#{o.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Nom</f:facet>
+							<h:outputText value="#{o.name}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Prenom</f:facet>
+							<h:outputText value="#{o.firstName}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Email</f:facet>
+							<h:outputText value="#{o.email}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Web</f:facet>
+							<h:outputText value="#{o.webSite}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Regarder</f:facet>
+							<h:commandLink value="Show" styleClass="btn btn-primary btn-xs"
+								action="#{personne.show(o.id)}" />
+						</p:column>
+					</p:dataTable>
+
+					<p>
+						<h:commandButton styleClass="btn btn-success"
+							action="#{personne.newPerson()}" value="New Person" />
+					</p>
+				</h:form>
+
+			</f:view>
 		</ui:define>
 	</ui:composition>
 </h:body>

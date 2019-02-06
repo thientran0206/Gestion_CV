@@ -24,13 +24,13 @@
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
 					<c:when test="${auth.id eq 00}"></c:when>
-					<c:otherwise>
+					<c:when test ="${auth.id eq p.id}">
 						<p>
 							<h:link outcome="editPerson" styleClass="btn btn-info">
 								<span>Modifier info</span>
 							</h:link>
 						</p>
-					</c:otherwise>
+					</c:when>
 				</c:choose>
 			</div>
 			<div>
@@ -38,11 +38,11 @@
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
 					<c:when test="${auth.id eq 00}"></c:when>
-					<c:otherwise>
+					<c:when test ="${auth.id eq p.id}">
 						<p>
 							<h:link styleClass="btn btn-info" outcome="addActivity" value="Ajouter" />
 						</p>
-					</c:otherwise>
+					</c:when>
 				</c:choose>
 			</div>
 

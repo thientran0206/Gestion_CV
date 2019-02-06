@@ -88,16 +88,6 @@ public class ActivityManager {
 		return null;
 
 	}
-	public Person logout() {
-		authPerson.setId(0);
-		authPerson.setName(null);
-		authPerson.setFirstName(null);
-		authPerson.setEmail(null);
-		authPerson.setBirthDay(null);
-		authPerson.setPwd(null);
-		authPerson.setWebSite(null);
-		return authPerson;
-}
 
 	public Person getAuthPerson() {
 		return authPerson;
