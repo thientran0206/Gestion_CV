@@ -2,18 +2,14 @@ package app.dao;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+
 import javax.persistence.TypedQuery;
 
 import app.entities.Activity;
@@ -59,38 +55,30 @@ public class PersonManager {
 	}
 
 	public List<Activity> findActivitiesPerson(Person person) {
-		Query query = null;
+		TypedQuery<Activity> query;
 		if (person.getId() != 0) {
 
-			try {
-				query = em.createQuery("SELECT a FROM Activity a WHERE a.person.id=" + person.getId() + "");
-			} catch (Exception e) {
-			}
-			if (query != null) {
-				return query.getResultList();
-			}
+			query = em.createQuery("SELECT a FROM Activity a WHERE a.person.id= :iden", Activity.class);
+			query.setParameter("iden", person.getId());
+
+			return query.getResultList();
 		}
 		return null;
 	}
 
 	public List<Activity> findActivityByTitle(String title) {
-		Query query = null;
-		try {
-			query = em.createQuery(
-					"SELECT p FROM Activity a, Person p WHERE a.title LIKE'%" + title + "%' AND p.id = a.owner.id");
-		} catch (NoResultException e) {
-			return null;
-		}
-		if (query != null) {
-			return query.getResultList();
-		}
-		return null;
+		TypedQuery<Activity> query;
+		query = em.createQuery("SELECT p FROM Activity a, Person p WHERE a.title = :title AND p.id = a.owner.id",
+				Activity.class);
+		query.setParameter("title", title);
+		return query.getResultList();
 	}
+
 	public List<Person> search(String name) {
 		TypedQuery<Person> q;
-			 q = em.createQuery("SELECT p1 FROM Person p1 WHERE p1.name = :nom ", Person.class);
-			 q.setParameter("nom", name);
-			return q.getResultList();
-		
+		q = em.createQuery("SELECT p1 FROM Person p1 WHERE p1.name = :nom ", Person.class);
+		q.setParameter("nom", name);
+		return q.getResultList();
+
 	}
 }

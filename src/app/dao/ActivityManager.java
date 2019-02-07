@@ -31,7 +31,12 @@ public class ActivityManager {
 		TypedQuery<Activity> q = em.createQuery("FROM Activity", Activity.class);
 		return q.getResultList();
 	}
-
+	
+	public Activity findActivityById(long id) {
+		System.err.println("findActivity witdh id=" + id);
+		return em.find(Activity.class, id);
+	}
+	
 	public Activity findOneActivity(String title) {
 		Query query = null;
 		try {
@@ -43,6 +48,10 @@ public class ActivityManager {
 			return (Activity) query.getSingleResult();
 		}
 		return null;
+	}
+	public Activity updateActivity(Activity a) {
+		a = em.merge(a);
+		return a;
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

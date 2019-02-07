@@ -67,5 +67,11 @@
 			<artifactId>javafaker</artifactId>
 			<version>0.17.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.fluttercode.datafactory</groupId>
+			<artifactId>datafactory</artifactId>
+			<version>0.8</version>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 </project>

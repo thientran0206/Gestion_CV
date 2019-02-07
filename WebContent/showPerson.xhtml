@@ -24,7 +24,7 @@
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
 					<c:when test="${auth.id eq 00}"></c:when>
-					<c:when test ="${auth.id eq p.id}">
+					<c:when test="${auth.id eq p.id}">
 						<p>
 							<h:link outcome="editPerson" styleClass="btn btn-info">
 								<span>Modifier info</span>
@@ -38,9 +38,10 @@
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
 					<c:when test="${auth.id eq 00}"></c:when>
-					<c:when test ="${auth.id eq p.id}">
+					<c:when test="${auth.id eq p.id}">
 						<p>
-							<h:link styleClass="btn btn-info" outcome="addActivity" value="Ajouter" />
+							<h:link styleClass="btn btn-info" outcome="addActivity"
+								value="Ajouter" />
 						</p>
 					</c:when>
 				</c:choose>
@@ -53,6 +54,7 @@
 					<th>Nature</th>
 					<th>Title</th>
 					<th>Description</th>
+					<th>Modify</th>
 				</tr>
 				<ui:repeat var="a" varStatus="s" value="#{p.activities}">
 					<tr>
@@ -62,7 +64,12 @@
 						<td>#{a.nature}</td>
 						<td>#{a.title}</td>
 						<td>#{a.description}</td>
-
+						<h:form>
+							<td><h:commandButton value="Modify"
+									action="#{personne.modify(a.idActivity)}"
+									styleClass="btn btn-success btn-xs">
+								</h:commandButton></td>
+						</h:form>
 					</tr>
 				</ui:repeat>
 			</table>

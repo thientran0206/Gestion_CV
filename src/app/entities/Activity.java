@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "activities", uniqueConstraints = {
-		@UniqueConstraint(name = "year_nature", columnNames = { "year", "nature" }) })
+		@UniqueConstraint(name = "year_nature", columnNames = { "year", "nature","owner" }) })
 public class Activity implements Serializable {
 
 	/**
@@ -29,8 +29,8 @@ public class Activity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idActivity;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long idActivity;
 
 	@Temporal(TemporalType.DATE)
 	private Date year;
@@ -49,11 +49,11 @@ public class Activity implements Serializable {
 	 @JoinColumn(name = "owner")
 	private Person owner;
 
-	public Integer getIdActivity() {
+	public long getIdActivity() {
 		return idActivity;
 	}
 
-	public void setIdActivity(Integer idActivity) {
+	public void setIdActivity(long idActivity) {
 		this.idActivity = idActivity;
 	}
 

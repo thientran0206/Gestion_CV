@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -12,7 +12,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+
+import org.fluttercode.datafactory.impl.DataFactory;
 
 import com.github.javafaker.Faker;
 
@@ -50,23 +51,33 @@ public class PersonControler {
 			Faker faker = new Faker(new Locale("fr"));
 			Person p1 = new Person("TRAN", "TrungThien", "thientran@gmail.com", "www.thientran.com", new Date(), "123");
 			pm.addPerson(p1);
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 20; i++) {
 				String nom = faker.name().firstName();
 				String prenom = faker.name().lastName();
 				String email = faker.internet().safeEmailAddress(nom + prenom);
 				Person p2 = new Person(prenom, nom, email, faker.internet().url(), faker.date().birthday(18, 65),
 						"123");
 				pm.addPerson(p2);
+				Nature[] nature = Nature.values();
+				int nombre = faker.number().numberBetween(2, 8);
+				for (int p = 0; p < nombre; p++) {
+					Activity activity = new Activity();
+					DataFactory df = new DataFactory();
+					Date minDate = df.getDate(2000, 1, 1);
+					Date maxDate = new Date();
+					Random generator = new Random();
+					activity.setYear(faker.date().between(minDate, maxDate));
+					activity.setNature(nature[generator.nextInt(nature.length)]);
+					activity.setTitle(faker.job().title());
+					activity.setDescription(faker.job().keySkills());
+					activity.setWebAddress(faker.internet().url());
+					activity.setOwner(pm.findPerson(p2.getId()));
+					am.saveActivity(activity);
+				}
 			}
-			Activity activity = new Activity();
-			activity.setYear(new Date());
-			activity.setNature(Nature.PROJET);
-			activity.setTitle("Développer un web de gestion CV");
-			activity.setDescription("Projet de AA");
-			activity.setWebAddress("https://github.com/thientran0206/Gestion_CV");
-			activity.setOwner(pm.findPerson(p1.getId()));
-			am.saveActivity(activity);
+
 		}
+
 	}
 
 	/*
@@ -102,7 +113,7 @@ public class PersonControler {
 		return null;
 	}
 
-	/* *************************Login******************************************** */
+	/* *************************Login&&Logout******************************************** */
 	public String login() {
 		if (am.login(authPerson.getEmail(), authPerson.getPwd()) != null) {
 			authPerson = am.getAuthPerson();
@@ -118,7 +129,6 @@ public class PersonControler {
 	public String logOut() {
 		System.out.println(" <=============== Déconnexion ================>");
 		authPerson = new Person();
-		//FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "accueil";
 	}
 
@@ -147,6 +157,8 @@ public class PersonControler {
 		return "showPerson";
 	}
 	
+	/* *************************Search******************************************** */
+	
 	private List<Person> resultSearch = new ArrayList<Person>();
 	
 	public List<Person> getResultSearch() {
@@ -162,5 +174,16 @@ public class PersonControler {
 		return "search?faces-redirect=true";
 	}
 	
+	/* *************************Modify Activity******************************************** */
 
+	public String modify(Integer i) {
+		activity=am.findActivityById(i);
+		return "modifyActivity?faces-redirect=true";
+	}
+	public void modifyActivity() {
+		activity=am.updateActivity(activity);
+	}
+	
+	
+	
 }
