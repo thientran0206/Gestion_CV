@@ -38,9 +38,10 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><h:link outcome="accueil">
-								<span>Liste de CV</span>
-							</h:link></li>
+						<h:form>
+							<h:commandButton value="List CVs"
+									action="#{personne.getAllActivities()}" ajax="false" />
+						</h:form>
 						<c:set var="auth" value="#{personne.authPerson}" />
 						<c:choose>
 							<c:when test="${auth.id eq 00}">
@@ -49,8 +50,9 @@
 									</h:link></li>
 							</c:when>
 							<c:otherwise>
-							<h:form>
-								<li><h:commandButton value="Se déconnecter" action="#{personne.logOut()}" ajax="false" /></li>
+								<h:form>
+									<h:commandButton value="Se déconnecter"
+											action="#{personne.logOut()}" ajax="false" />
 								</h:form>
 							</c:otherwise>
 						</c:choose>

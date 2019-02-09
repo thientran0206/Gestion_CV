@@ -2,9 +2,11 @@ package app.controler;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -133,7 +135,7 @@ public class PersonControler {
 	}
 
 	/*
-	 * *******************************Activities************************************
+	 * *******************************Activity************************************
 	 * **
 	 */
 
@@ -156,6 +158,27 @@ public class PersonControler {
 		thePerson = pm.findPerson(authPerson.getId());//pour mise a jour nouvelle activite
 		return "showPerson";
 	}
+	/*
+	 * *******************************Activities************************************
+	 * **
+	 */
+	private List<Activity> activities = new ArrayList<Activity>();
+	public String getAllActivities() {
+		activities=am.findActivities();
+		return "listCV?faces-redirect=true";
+		
+	}
+	
+	
+	public List<Activity> getActivities() {
+		return activities;
+	}
+
+	public List<Activity> setActivities(List<Activity> activities) {
+		this.activities = activities;
+		return activities;
+	}
+	
 	
 	/* *************************Search******************************************** */
 	
@@ -175,15 +198,21 @@ public class PersonControler {
 	}
 	
 	/* *************************Modify Activity******************************************** */
-
+	
+	
 	public String modify(Integer i) {
 		activity=am.findActivityById(i);
+		System.out.println(activity);
 		return "modifyActivity?faces-redirect=true";
 	}
-	public void modifyActivity() {
-		activity=am.updateActivity(activity);
-	}
 	
+	public String modifyActivity() {
+		System.out.println(activity);
+		activity = am.updateActivity(activity);
+		thePerson = pm.findPerson(authPerson.getId());
+		return "modifyActivity?faces-redirect=true";
+	}
+
 	
 	
 }

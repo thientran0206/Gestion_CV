@@ -54,7 +54,6 @@
 					<th>Nature</th>
 					<th>Title</th>
 					<th>Description</th>
-					<th>Modify</th>
 				</tr>
 				<ui:repeat var="a" varStatus="s" value="#{p.activities}">
 					<tr>
@@ -64,12 +63,19 @@
 						<td>#{a.nature}</td>
 						<td>#{a.title}</td>
 						<td>#{a.description}</td>
+						<c:set var="auth" value="#{personne.authPerson}" />
+				<c:choose>
+					<c:when test="${auth.id eq 00}"></c:when>
+					<c:when test="${auth.id eq p.id}">
 						<h:form>
 							<td><h:commandButton value="Modify"
 									action="#{personne.modify(a.idActivity)}"
 									styleClass="btn btn-success btn-xs">
 								</h:commandButton></td>
 						</h:form>
+					</c:when>
+				</c:choose>
+						
 					</tr>
 				</ui:repeat>
 			</table>
