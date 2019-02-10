@@ -206,11 +206,11 @@ public class PersonControler {
 		return "modifyActivity?faces-redirect=true";
 	}
 	
-	public String modifyActivity() {
+	public void modifyActivity() {
 		System.out.println(activity);
 		activity = am.updateActivity(activity);
-		thePerson = pm.findPerson(authPerson.getId());
-		return "modifyActivity?faces-redirect=true";
+		thePerson = pm.findPerson(authPerson.getId());//pour si on clique le boutton quit dans modif il va mettre a jour profil person 
+		//return "modifyActivity?faces-redirect=true";
 	}
 
 	

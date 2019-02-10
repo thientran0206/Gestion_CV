@@ -8,8 +8,8 @@
 <ui:composition template="/template/mylayout.xhtml">
 	<ui:define name="content">
 		<f:view>
-		<h1>Activity</h1>
-		<c:set var="a" value="#{personne.activity}" />
+			<h1>Activity</h1>
+			<c:set var="a" value="#{personne.activity}" />
 			<table class="table">
 				<tr>
 
@@ -20,12 +20,15 @@
 					<th>Web</th>
 				</tr>
 				<tr>
-						<td>#{a.year}</td>
-						<td>#{a.nature}</td>
-						<td>#{a.title}</td>
-						<td>#{a.description}</td>
-						<td>#{a.webAddress}</td>
-						</tr>
+					<td> <h:outputText value="#{a.year}" id="ajax1">
+						<f:convertDateTime pattern="yyyy-MM-dd" />
+						</h:outputText>
+					</td>
+					<td><h:outputText value="#{a.nature}" id="ajax2"/></td>
+					<td><h:outputText value="#{a.title}" id="ajax3"/></td>
+					<td><h:outputText value="#{a.description}" id="ajax4"/></td>
+					<td><h:outputText value="#{a.webAddress}" id="ajax5"/></td>
+				</tr>
 			</table>
 			<h1>Activity form</h1>
 			<h:form id="test">
@@ -69,10 +72,10 @@
 					<h:message styleClass="label label-danger" for="year" />
 				</div>
 				<div class="form-group">
-					<h:commandButton action="#{personne.modifyActivity()}"
-						styleClass="btn btn-primary" value="Modify">
-						<f:ajax execute="@all" render="@form" />
-						</h:commandButton>
+					<h:commandButton styleClass="btn btn-primary" value="Modify">
+						<f:ajax execute="@all" render="ajax1 ajax2 ajax3 ajax4 ajax5"
+							listener="#{personne.modifyActivity()}" />
+					</h:commandButton>
 					<span> </span>
 					<h:link styleClass="btn btn-info" outcome="showPerson" value="Quit" />
 				</div>
