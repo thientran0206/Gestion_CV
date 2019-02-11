@@ -4,6 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title><ui:insert name="title">My application</ui:insert></title>
@@ -17,7 +18,7 @@
 
 	<div class="container">
 
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed"
@@ -37,23 +38,36 @@
 				<!-- Mon menu -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
+					<h:form class="navbar-form navbar-left" id="search-form">
+						<div class="form-group">
+							<h:inputText class="form-control" id="search"
+								value="#{personne.thePerson.name}"
+								pt:placeholder="Veillez taper le nom" />
+							<h:commandButton class="form-control btn btn-default"
+								value="Recherche" action="#{personne.showResultSearch()}"
+								ajax="false"></h:commandButton>
+						</div>
+					</h:form>
 					<ul class="nav navbar-nav">
-						<h:form>
-							<h:commandButton value="List CVs"
-									action="#{personne.getAllActivities()}" ajax="false" />
-						</h:form>
+						<li><h:link outcome="listCV"
+								onclick="#{personne.getAllActivities()}">Liste de CVs</h:link></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
 						<c:set var="auth" value="#{personne.authPerson}" />
 						<c:choose>
 							<c:when test="${auth.id eq 00}">
 								<li><h:link outcome="authPerson">
-										<span>Connection</span>
+										<span class="glyphicon glyphicon-user">S'authentifier</span>
 									</h:link></li>
 							</c:when>
 							<c:otherwise>
 								<h:form>
-									<h:commandButton value="Se déconnecter"
-											action="#{personne.logOut()}" ajax="false" />
-								</h:form>
+									<li><h:commandButton class="btn btn-danger navbar-btn" value="Se déconnecter"
+										action="#{personne.logOut()}" ajax="false" /></li>
+									<li><h2 class="text-success">
+										<h:outputText value="Bienvenue #{auth.name}" /></h2></li>
+								
+									</h:form>
 							</c:otherwise>
 						</c:choose>
 					</ul>

@@ -4,13 +4,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/mylayout.xhtml">
 	<ui:define name="content">
 		<f:view>
 
-			<h1>Activity form</h1>
+			<h1>Nouvelle activité</h1>
 			<h:form id="test">
 				<c:set var="a" value="#{personne.activity}" />
 				<div class="form-group">
@@ -29,19 +30,10 @@
 					<h:message styleClass="label label-danger" for="description" />
 				</div>
 
-				<!-- 				<div class="form-group col-md-4"> -->
-				<!-- 					<label for="nature">Nature:</label>  -->
-				<!-- 					<select id="inputState" class="form-control" required="true" > -->
-				<!-- 						<option value="#{a.nature}=FORMATIONS">Formations</option> -->
-				<!-- 						<option value="PROJET">Projet</option> -->
-				<!-- 						<option value="EXPERIENCES_PROFESSIONNELLES">Experience Professionelles</option> -->
-				<!-- 						<option value="AUTRES">Autres</option> -->
-				<!-- 					</select> -->
-				<!-- 				</div> -->
 				<div class="form-group">
-					<label for="nature">Nature(FORMATIONS,PROJET,EXPERIENCES,AUTRES):</label>
+					<label for="nature">Nature:</label>
 					<h:inputText id="nature" value="#{a.nature}"
-						styleClass="form-control" />
+						styleClass="form-control" pt:placeholder="FORMATIONS,PROJET,EXPERIENCES,AUTRES" />
 					<h:message styleClass="label label-danger" for="nature" />
 				</div>
 				<div class="form-group">
@@ -57,15 +49,15 @@
 				<div class="form-group">
 					<label for="date">Year:</label>
 					<p:calendar id="year" value="#{a.year}" locale="fr" required="true"
-						navigator="true" pattern="yyyy" />
+						navigator="true" pattern="dd-MM-yyyy" pt:placeholder="dd-mm-yyyy"/>
 
 					<h:message styleClass="label label-danger" for="year" />
 				</div>
 				<div class="form-group">
 					<h:commandButton action="#{personne.ajouter()}"
-						styleClass="btn btn-primary" value="Save" ajax="false"/>
+						styleClass="btn btn-primary" value="Ajouter" ajax="false"/>
 					<span> </span>
-					<h:link styleClass="btn btn-info" outcome="showPerson" value="Quit" />
+					<h:link styleClass="btn btn-info" outcome="showPerson" value="Quitter" />
 				</div>
 			</h:form>
 		</f:view>

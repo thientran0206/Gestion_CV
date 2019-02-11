@@ -13,17 +13,17 @@
 	<ui:define name="content">
 		<f:view>
 			<div>
-				<h1>List of Activity</h1>
+				<h1>Liste d'activités</h1>
 			</div>
 			<p:dataTable value="#{personne.activities}" var="o"
 						styleClass="table table-hover" headerClass="danger"
 						footerClass="danger" rowClasses="success,warning">
 						<p:column>
-							<f:facet name="header">Number</f:facet>
+							<f:facet name="header">Id</f:facet>
 							<h:outputText value="#{o.idActivity}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Year</f:facet>
+							<f:facet name="header">Date</f:facet>
 							<h:outputText value="#{o.year}" />
 						</p:column>
 						<p:column>
@@ -31,7 +31,7 @@
 							<h:outputText value="#{o.nature}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Title</f:facet>
+							<f:facet name="header">Titre</f:facet>
 							<h:outputText value="#{o.title}" />
 						</p:column>
 						<p:column>
@@ -39,14 +39,14 @@
 							<h:outputText value="#{o.description}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Web</f:facet>
+							<f:facet name="header">Site web</f:facet>
 							<h:outputText value="#{o.webAddress}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Author</f:facet>
+							<f:facet name="header">Auteur</f:facet>
 							<h:form>
 								<h:commandButton styleClass="btn btn-success"
-							action="#{personne.show(o.owner.id)}" value="Show" />
+							action="#{personne.show(o.owner.id)}" value="Afficher profil" />
 							</h:form>
 								
 						</p:column>

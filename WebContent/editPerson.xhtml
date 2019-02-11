@@ -4,18 +4,47 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/mylayout.xhtml">
 	<ui:define name="content">
 		<f:view>
+			<c:set var="p" value="#{personne.thePerson}" />
+			<c:choose>
+				<c:when test="${p.id ne 00}">
+					<h1>Information</h1>
+					<table class="table">
+						<tr>
 
-			<h1>Person form</h1>
+							<th>Nom</th>
+							<th>Prénom</th>
+							<th>Email</th>
+							<th>Site Web</th>
+							<th>Date de naissance</th>
+						</tr>
+						<tr>
+
+							<td><h:outputText value="#{p.name}" id="ajax2" /></td>
+							<td><h:outputText value="#{p.firstName}" id="ajax3" /></td>
+							<td><h:outputText value="#{p.email}" id="ajax4" /></td>
+							<td><h:outputText value="#{p.webSite}" id="ajax5" /></td>
+							<td><h:outputText value="#{p.birthDay}" id="ajax1">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:outputText></td>
+						</tr>
+					</table>
+				</c:when>
+
+			</c:choose>
+
+
+			<h1>Nouvelle personne</h1>
 			<h:form id="test">
-				<c:set var="p" value="#{personne.thePerson}" />
+
 
 				<div class="form-group">
-					<label for="name">Name:</label>
+					<label for="name">Nom:</label>
 					<h:inputText id="name" value="#{p.name}" styleClass="form-control"
 						required="true" requiredMessage="Le nom est obligatoire">
 						<f:validateLength minimum="3" maximum="50" />
@@ -23,7 +52,7 @@
 					<h:message styleClass="label label-danger" for="name" />
 				</div>
 				<div class="form-group">
-					<label for="name">First name:</label>
+					<label for="name">Prénom:</label>
 					<h:inputText id="firstname" value="#{p.firstName}"
 						styleClass="form-control" />
 					<h:message styleClass="label label-danger" for="firstName" />
@@ -31,33 +60,36 @@
 				<div class="form-group">
 					<label for="name">Email:</label>
 					<h:inputText id="email" value="#{p.email}"
-						styleClass="form-control" validatorMessage="Email n'est pas valide">
+						styleClass="form-control"
+						validatorMessage="Email n'est pas valide">
 						<f:validateRegex
 							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 					</h:inputText>
 					<h:message styleClass="label label-danger" for="email" />
 				</div>
 				<div class="form-group">
-					<label for="name">Web Site:</label>
+					<label for="name">Site Web:</label>
 					<h:inputText id="web" value="#{p.webSite}"
-						styleClass="form-control" validatorMessage="Site web n'est pas valide">
+						styleClass="form-control"
+						validatorMessage="Site web n'est pas valide">
 						<f:validateRegex
-							pattern="^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$"/>
-						</h:inputText>
+							pattern="^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$" />
+					</h:inputText>
 					<h:message styleClass="label label-danger" for="web" />
 				</div>
 
 				<div class="form-group">
-					<label for="name">Birthday(dd-mm-yyyy):</label>
-					<p:calendar id="birthday" value="#{p.birthDay}" locale="fr" required="true"
-						navigator="true" pattern="dd-MM-yyyy" />
+					<label for="name">Date de naissance:</label>
+					<p:calendar id="birthday" value="#{p.birthDay}" locale="fr"
+						required="true" navigator="true" pattern="dd-MM-yyyy"  pt:placeholder="dd-mm-yyyy"/>
 
 					<h:message styleClass="label label-danger" for="birthday" />
 				</div>
 
 				<div class="form-group">
-					<label for="name">Password:</label>
-					<h:inputSecret id="pwd" value="#{p.pwd}" styleClass="form-control" validatorMessage="Mot de passe n'est pas valide">
+					<label for="name">Mot de passe:</label>
+					<h:inputSecret id="pwd" value="#{p.pwd}" styleClass="form-control"
+						validatorMessage="Mot de passe n'est pas valide">
 						<f:validateLength minimum="3" maximum="20" />
 					</h:inputSecret>
 					<h:message styleClass="label label-danger" for="pwd" />
@@ -65,10 +97,20 @@
 
 
 				<div class="form-group">
-					<h:commandButton action="#{personne.save()}"
-						styleClass="btn btn-primary" value="Save" />
+					<c:choose>
+						<c:when test="${p.id ne 00}">
+							<h:commandButton styleClass="btn btn-primary" value="Modifier">
+								<f:ajax execute="@all" render="ajax1 ajax2 ajax3 ajax4 ajax5"
+									listener="#{personne.savePerson()}" />
+							</h:commandButton>
+						</c:when>
+						<c:otherwise>
+							<h:commandButton action="#{personne.save()}"
+								styleClass="btn btn-primary" value="Ajouter" />
+						</c:otherwise>
+					</c:choose>
 					<span> </span>
-					<h:link styleClass="btn btn-info" outcome="accueil" value="Quit" />
+					<h:link styleClass="btn btn-info" outcome="showPerson" value="Quitter" />
 				</div>
 			</h:form>
 

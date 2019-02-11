@@ -44,20 +44,18 @@ public class PersonControler {
 		this.authPerson = authPerson;
 	}
 
-	Person authPerson = new Person();// pour la partie connection
+	Person authPerson = new Person();// pour la partie connexion
 
 	@PostConstruct
 	public void init() {
 		System.out.println("Create " + this);
 		if (pm.findAllPersons().size() == 0) {
-			Faker faker = new Faker(new Locale("fr"));
-			Person p1 = new Person("TRAN", "TrungThien", "thientran@gmail.com", "www.thientran.com", new Date(), "123");
-			pm.addPerson(p1);
+			Faker faker = new Faker(new Locale("en"));//Generer les informations avec Faker
 			for (int i = 0; i < 20; i++) {
-				String nom = faker.name().firstName();
-				String prenom = faker.name().lastName();
+				String nom = faker.name().lastName();
+				String prenom = faker.name().firstName();
 				String email = faker.internet().safeEmailAddress(nom + prenom);
-				Person p2 = new Person(prenom, nom, email, faker.internet().url(), faker.date().birthday(18, 65),
+				Person p2 = new Person(prenom, nom, prenom+"." + nom+"@amu.fr","www."+prenom + nom +".com", faker.date().birthday(18, 65),
 						"123");
 				pm.addPerson(p2);
 				Nature[] nature = Nature.values();
@@ -72,7 +70,7 @@ public class PersonControler {
 					activity.setNature(nature[generator.nextInt(nature.length)]);
 					activity.setTitle(faker.job().title());
 					activity.setDescription(faker.job().keySkills());
-					activity.setWebAddress(faker.internet().url());
+					activity.setWebAddress("www."+p2.getName()+p2.getFirstName()+".com");
 					activity.setOwner(pm.findPerson(p2.getId()));
 					am.saveActivity(activity);
 				}
@@ -92,22 +90,28 @@ public class PersonControler {
 	public Person getThePerson() {
 		return thePerson;
 	}
-
+	//Afficher le profil de la personne via son id
 	public String show(Long n) {
 		thePerson = pm.findPerson(n);
 		return "showPerson?faces-redirect=true";
 	}
-
+	//pour ajouter nouvelle personne
 	public String save() {
 		pm.addPerson(thePerson);
 		return "showPerson";
 	}
-
+	//pour mise a jour la personne
+	public void savePerson() {
+		thePerson=pm.updatePerson(thePerson);
+		
+	
+	}
+	//Creation la nouvelle personne
 	public String newPerson() {
 		thePerson = new Person();
 		return "editPerson?faces-redirect=true";
 	}
-
+	//chercher toutes les activites de la personne
 	public List<Activity> getActivitiesPerson() {
 		if (thePerson != null) {
 			return pm.findActivitiesPerson(thePerson);
@@ -148,14 +152,18 @@ public class PersonControler {
 	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
-
+	//creer une instance de l'activite
+	public void newActivity() {
+		activity=new Activity();
+	}
+	// ajouter une activite
 	public String ajouter() {
 		activity.setOwner(pm.findPerson(authPerson.getId()));
 		am.saveActivity(activity);
 		System.out.println(activity.getOwner());
 		System.out.println(authPerson.getActivities());
-		activity = new Activity();
 		thePerson = pm.findPerson(authPerson.getId());//pour mise a jour nouvelle activite
+		activity = new Activity();
 		return "showPerson";
 	}
 	/*
@@ -163,6 +171,7 @@ public class PersonControler {
 	 * **
 	 */
 	private List<Activity> activities = new ArrayList<Activity>();
+	// pour chercher tout les activites
 	public String getAllActivities() {
 		activities=am.findActivities();
 		return "listCV?faces-redirect=true";
@@ -180,7 +189,7 @@ public class PersonControler {
 	}
 	
 	
-	/* *************************Search******************************************** */
+	/* *************************Recherche******************************************** */
 	
 	private List<Person> resultSearch = new ArrayList<Person>();
 	
@@ -197,7 +206,7 @@ public class PersonControler {
 		return "search?faces-redirect=true";
 	}
 	
-	/* *************************Modify Activity******************************************** */
+	/* *************************Modifier une Activite******************************************** */
 	
 	
 	public String modify(Integer i) {
@@ -210,7 +219,7 @@ public class PersonControler {
 		System.out.println(activity);
 		activity = am.updateActivity(activity);
 		thePerson = pm.findPerson(authPerson.getId());//pour si on clique le boutton quit dans modif il va mettre a jour profil person 
-		//return "modifyActivity?faces-redirect=true";
+		
 	}
 
 	

@@ -14,12 +14,11 @@
 		<f:view>
 			<c:set var="p" value="#{personne.thePerson}" />
 			<div class="jumbotron">
-				<h1>Nom: #{p.name}</h1>
-				<h1>Prenom: #{p.firstName}</h1>
-				<p>Id: #{p.id}</p>
-				<p>Email: #{p.email}</p>
-				<p>SiteWeb: #{p.webSite}</p>
-				<p>Nee: #{p.birthDay}</p>
+				<h2>Nom: #{p.name}</h2>
+				<h2>Prénom: #{p.firstName}</h2>
+				<h3>Email: #{p.email}</h3>
+				<h3>Site Web: #{p.webSite}</h3>
+				<h3>Date de naissance: #{p.birthDay}</h3>
 				<p></p>
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
@@ -27,21 +26,21 @@
 					<c:when test="${auth.id eq p.id}">
 						<p>
 							<h:link outcome="editPerson" styleClass="btn btn-info">
-								<span>Modifier info</span>
+								<span>Modifier</span>
 							</h:link>
 						</p>
 					</c:when>
 				</c:choose>
 			</div>
 			<div>
-				<h1>List of Activity</h1>
+				<h1>Liste d'activités</h1>
 				<c:set var="auth" value="#{personne.authPerson}" />
 				<c:choose>
 					<c:when test="${auth.id eq 00}"></c:when>
 					<c:when test="${auth.id eq p.id}">
 						<p>
-							<h:link styleClass="btn btn-info" outcome="addActivity"
-								value="Ajouter" />
+							<h:link styleClass="btn btn-info" outcome="addActivity" onclick="#{personne.newActivity()}">
+							Ajouter</h:link>
 						</p>
 					</c:when>
 				</c:choose>
@@ -50,9 +49,9 @@
 			<table class="table">
 				<tr>
 					<!--                         <th>Id</th> -->
-					<th>Year</th>
+					<th>Date</th>
 					<th>Nature</th>
-					<th>Title</th>
+					<th>Titre</th>
 					<th>Description</th>
 				</tr>
 				<ui:repeat var="a" varStatus="s" value="#{p.activities}">
@@ -68,7 +67,7 @@
 					<c:when test="${auth.id eq 00}"></c:when>
 					<c:when test="${auth.id eq p.id}">
 						<h:form>
-							<td><h:commandButton value="Modify"
+							<td><h:commandButton value="Modifier"
 									action="#{personne.modify(a.idActivity)}"
 									styleClass="btn btn-success btn-xs">
 								</h:commandButton></td>
